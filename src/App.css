@@ -1,0 +1,626 @@
+:root {
+  --bg: #0b1220;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.62);
+  --muted2: rgba(255, 255, 255, 0.45);
+  --accent: #2d7cff;
+  --accent2: #00e0d8;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 700px at 20% -10%, rgba(45, 124, 255, 0.35), transparent 60%),
+    radial-gradient(900px 600px at 80% 10%, rgba(0, 224, 216, 0.18), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Layout */
+.shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+.main {
+  padding: 18px 18px 40px;
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Sidebar */
+.sidebar {
+  background: linear-gradient(180deg, rgba(9, 18, 40, 0.92), rgba(7, 14, 32, 0.92));
+  border-right: 1px solid var(--border);
+  padding: 18px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 14px;
+}
+
+.brandMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: var(--shadow);
+}
+
+.brandName {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.nav {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  pointer-events: auto;
+}
+
+.navItem {
+  display: grid;
+  gap: 2px;
+  padding: 10px 10px;
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid transparent;
+  pointer-events: auto;
+}
+
+.navItem small {
+  color: var(--muted2);
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.navItemActive {
+  background: rgba(45, 124, 255, 0.16);
+  border-color: rgba(45, 124, 255, 0.35);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.headerTitle {
+  display: grid;
+  gap: 4px;
+}
+
+.headerTitle span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.headerRight {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.badge {
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.content {
+  margin-top: 16px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cardPad {
+  padding: 16px;
+}
+
+.cardTitle {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* Grids */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 1000px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    height: auto;
+    position: relative;
+  }
+
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Inputs */
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  outline: none;
+}
+
+input[type="file"] {
+  color: var(--muted);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* KPI Strip */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 16px;
+}
+
+@media (max-width: 1100px) {
+  .kpi-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.kpi-card {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  min-height: 92px;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.kpi-label {
+  font-size: 12px;
+  opacity: 0.72;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+.kpi-value {
+  font-size: 24px;
+  font-weight: 750;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.kpi-sub {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 6px;
+}
+
+.kpi-sub--empty {
+  opacity: 0;
+}
+
+.kpi-pill {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.kpi-pill--pos {
+  border-color: rgba(80, 200, 120, 0.35);
+  background: rgba(80, 200, 120, 0.12);
+}
+
+.kpi-pill--neg {
+  border-color: rgba(255, 90, 90, 0.35);
+  background: rgba(255, 90, 90, 0.12);
+}
+
+.kpi-card--risk {
+  border-color: rgba(255, 90, 90, 0.35);
+  background: rgba(255, 90, 90, 0.08);
+}
+
+/* Decision Insight */
+.decisionInsight {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.decisionInsightTitle {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.insight-headline,
+.insight-details,
+.insight-impact-text {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.insight-details {
+  margin-top: 6px;
+  line-height: 1.5;
+  opacity: 0.92;
+}
+
+.insight-suggestions {
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+.insight-suggestions li {
+  margin: 6px 0;
+}
+
+.insight-impact {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.insight-impact-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.insightHeadline {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.insightDetails {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+.insightSuggestions {
+  margin-top: 6px;
+  padding-left: 18px;
+}
+
+.insightSuggestions li {
+  margin-bottom: 6px;
+}
+
+.insightImpactBox {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.insightImpactTitle {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.insightImpactText {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Legacy risk styles still used elsewhere */
+.riskCard {
+  background: #0f0f0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  margin: 14px 0;
+}
+
+.riskHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.riskTitle {
+  font-size: 13px;
+  opacity: 0.75;
+  letter-spacing: 0.2px;
+}
+
+.riskPill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0.95;
+}
+
+.riskPill.Low {
+  color: #3fb950;
+}
+
+.riskPill.Medium {
+  color: #d29922;
+}
+
+.riskPill.High {
+  color: #f85149;
+}
+
+.riskPill.Critical {
+  color: #ff0000;
+}
+
+.riskScoreRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.riskScore {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.riskHint {
+  font-size: 13px;
+  opacity: 0.75;
+  text-align: right;
+}
+
+.riskGaugeFill {
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.riskLegend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 8px;
+}
+
+.riskLevel {
+  margin-top: 6px;
+}
+
+.riskLevel.Low,
+.risk-low {
+  color: #3fb950;
+  border-color: #3fb950;
+}
+
+.riskLevel.Medium,
+.risk-medium {
+  color: #d29922;
+  border-color: #d29922;
+}
+
+.riskLevel.High,
+.risk-high {
+  color: #f85149;
+  border-color: #f85149;
+}
+
+.riskLevel.Critical,
+.risk-critical {
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+/* New premium Risk Gauge */
+.riskGaugeCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.riskGaugeHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.riskGaugeEyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.riskGaugeHeading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.riskGaugeBadge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+}
+
+.riskGaugeMeterWrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 2px;
+}
+
+.riskGaugeMeter {
+  position: relative;
+  width: 220px;
+  height: 110px;
+  border-radius: 220px 220px 0 0;
+  overflow: hidden;
+}
+
+.riskGaugeInner {
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 80px;
+  border-radius: 160px 160px 0 0;
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+}
+
+.riskGaugeCenter {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.riskGaugeBigScore {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.riskGaugeSub {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8ea0bf;
+}
+
