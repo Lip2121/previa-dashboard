@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
-const API_BASE = "http://127.0.0.1:8010";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8010";
 
 function pageTitle(pathname) {
   if (pathname.startsWith("/scenarios")) return "Scenarios";

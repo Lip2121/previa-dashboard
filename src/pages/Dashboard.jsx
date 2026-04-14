@@ -19,6 +19,16 @@ function getBalanceAtDate(data, date, key) {
   return row ? row[key] : null;
 }
 
+function formatChartDate(value) {
+  if (!value) return "";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export default function Dashboard() {
   const {
     baselineResult,
@@ -117,15 +127,51 @@ export default function Dashboard() {
 
             <div style={{ width: "100%", height: 380 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+                <LineChart
+                  data={chartData}
+                  margin={{ top: 12, right: 16, left: 8, bottom: 8 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.18)" />
+
+                  <XAxis
+  dataKey="date"
+  tickFormatter={formatChartDate}
+  interval={6}
+  tick={{ fill: "#94a3b8", fontSize: 12 }}
+  axisLine={{ stroke: "rgba(148,163,184,0.22)" }}
+  tickLine={false}
+/>
+
+                  <YAxis
+  tickFormatter={(value) => {
+    if (Math.abs(value) >= 1000) return `${Math.round(value / 1000)}k`;
+    return `${value}`;
+  }}
+  tick={{ fill: "#94a3b8", fontSize: 12 }}
+  axisLine={{ stroke: "rgba(148,163,184,0.22)" }}
+  tickLine={false}
+  width={44}
+/>
+
+                  <Tooltip
+                    labelFormatter={(value) => formatChartDate(value)}
+                    contentStyle={{
+                      backgroundColor: "#0f172a",
+                      border: "1px solid rgba(148,163,184,0.18)",
+                      borderRadius: "12px",
+                      color: "#e2e8f0",
+                    }}
+                    labelStyle={{ color: "#cbd5e1", fontWeight: 600 }}
+                  />
+
+                  <Legend wrapperStyle={{ color: "#94a3b8", fontSize: 12 }} />
 
                   {Number.isFinite(Number(warningThreshold)) && (
-                    <ReferenceLine y={Number(warningThreshold)} strokeDasharray="2 6" />
+                    <ReferenceLine
+                      y={Number(warningThreshold)}
+                      stroke="rgba(245,158,11,0.8)"
+                      strokeDasharray="4 4"
+                    />
                   )}
 
                   <Line
@@ -133,7 +179,8 @@ export default function Dashboard() {
                     dataKey="balance_baseline"
                     name="Baseline balance"
                     dot={false}
-                    strokeWidth={2}
+                    strokeWidth={2.5}
+                    stroke="#38bdf8"
                   />
 
                   {scenarioForecast && (
@@ -142,23 +189,41 @@ export default function Dashboard() {
                       dataKey="balance_scenario"
                       name="Scenario balance"
                       dot={false}
-                      strokeWidth={2}
+                      strokeWidth={2.5}
+                      stroke="#22c55e"
                     />
                   )}
 
-                  {firstWarning && <ReferenceLine x={firstWarning} strokeDasharray="5 5" />}
-                  {firstNegative && <ReferenceLine x={firstNegative} strokeDasharray="2 2" />}
+                  {firstWarning && (
+                    <ReferenceLine
+                      x={firstWarning}
+                      stroke="rgba(245,158,11,0.8)"
+                      strokeDasharray="5 5"
+                    />
+                  )}
+
+                  {firstNegative && (
+                    <ReferenceLine
+                      x={firstNegative}
+                      stroke="rgba(239,68,68,0.8)"
+                      strokeDasharray="3 3"
+                    />
+                  )}
 
                   {scenarioFirstNegative && outflowShiftDays > 0 && (
-                    <ReferenceLine x={scenarioFirstNegative} strokeDasharray="1 4" />
+                    <ReferenceLine
+                      x={scenarioFirstNegative}
+                      stroke="rgba(34,197,94,0.8)"
+                      strokeDasharray="3 5"
+                    />
                   )}
 
                   {firstNegative && (
                     <ReferenceDot
                       x={firstNegative}
                       y={getBalanceAtDate(chartData, firstNegative, "balance_baseline")}
-                      r={6}
-                      fill="#0f172a"
+                      r={5}
+                      fill="#ef4444"
                       stroke="none"
                     />
                   )}
@@ -167,8 +232,8 @@ export default function Dashboard() {
                     <ReferenceDot
                       x={scenarioFirstNegative}
                       y={getBalanceAtDate(chartData, scenarioFirstNegative, "balance_scenario")}
-                      r={6}
-                      fill="#0f172a"
+                      r={5}
+                      fill="#22c55e"
                       stroke="none"
                     />
                   )}
@@ -180,6 +245,7 @@ export default function Dashboard() {
           <DecisionInsight
             summary={baselineResult?.summary}
             decisionImpact={baselineResult?.decision_impact}
+            failureProbability={baselineResult?.forecast?.liquidity_failure?.probability}
           />
         </div>
       )}

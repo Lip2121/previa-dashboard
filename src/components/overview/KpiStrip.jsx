@@ -207,17 +207,17 @@ export default function KpiStrip({ baselineResult, scenarioResult }) {
   const riskValue = metrics.risk?.score != null ? `${metrics.risk.score}` : "—";
   const riskSub = metrics.risk?.level ? `Risk level: ${metrics.risk.level}` : "—";
 
-  const failPct =
+    const failPct =
     metrics.failure?.prob != null
       ? `${Math.round(metrics.failure.prob * 100)}%`
       : "—";
 
   const failSub =
     metrics.failure?.prob != null
-      ? "Chance cash goes negative"
+      ? "Probability of liquidity failure"
       : metrics.failure?.error
-      ? "Need more history"
-      : "Chance cash goes negative";
+      ? "Insufficient history"
+      : "Probability of liquidity failure";
 
   const sc = metrics.scenario || {};
 
@@ -259,7 +259,7 @@ export default function KpiStrip({ baselineResult, scenarioResult }) {
       />
 
       <KpiCard
-        label="Failure probability"
+        label="Liquidity failure" 
         value={failPct}
         sub={failSub}
         delta={metrics.failure?.deltaProbPct}
